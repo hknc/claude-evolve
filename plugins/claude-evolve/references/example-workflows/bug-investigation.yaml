@@ -1,0 +1,117 @@
+# Example Workflow Template (Software Development)
+#
+# This is an EXAMPLE - not a requirement.
+# Claude-evolve adapts to ANY domain dynamically.
+#
+# You can:
+# - Delete these examples if not needed
+# - Create your own templates for your domain
+# - Let Claude suggest phases dynamically (recommended)
+#
+# NOTE: Skills and agents listed are suggestions. System works without them.
+
+name: bug-investigation
+version: "1.0"
+description: |
+  Systematic approach to finding and fixing bugs.
+  Focus on understanding root cause before implementing fixes.
+
+complexity: variable
+
+phases:
+  - name: reproduce
+    goal: Reliably reproduce the bug
+    suggested_approaches:
+      - "Follow systematic debugging approach"
+      - "Isolate the issue"
+      - "Use systematic-debugging skill if available"
+    deliverable: Steps to reproduce with expected vs actual behavior
+    skip_if: Bug already reproducible from description
+    questions:
+      - Can you reproduce the bug consistently?
+      - What are the exact steps?
+      - What's the expected behavior?
+      - What's the actual behavior?
+
+  - name: root-cause
+    goal: Find the actual cause, not just symptoms
+    suggested_approaches:
+      - "Trace execution path"
+      - "Check recent changes"
+      - "Use code exploration to understand flow"
+    deliverable: Identified root cause with evidence
+    skip_if: Cause is obvious from stack trace or error
+    questions:
+      - What does the stack trace tell us?
+      - Where does the error originate?
+      - What changed recently that could cause this?
+      - Are there related symptoms we should check?
+
+  - name: fix
+    goal: Implement a proper fix (not a workaround)
+    suggested_approaches:
+      - "Write regression test first"
+      - "Fix the root cause, not symptoms"
+      - "Use test-driven approach if available"
+    deliverable: Fix with regression test
+    skip_if: Never skip the fix
+    questions:
+      - Does this fix the root cause or just symptoms?
+      - Could this fix break anything else?
+      - How do we prevent this bug class?
+
+  - name: verify
+    goal: Confirm fix works and doesn't regress
+    suggested_approaches:
+      - "Run all tests"
+      - "Manual verification"
+      - "Use verification skill if available"
+    deliverable: Tests passing, fix verified
+    skip_if: Only for trivial, isolated fixes
+    questions:
+      - Does the original bug no longer occur?
+      - Do all existing tests still pass?
+      - Are there edge cases we should test?
+
+triggers:
+  - "fix"
+  - "bug"
+  - "error"
+  - "crash"
+  - "broken"
+  - "doesn't work"
+  - "failing"
+  - "investigate bug"
+  - "investigate error"
+  - "debug"
+
+skip_for:
+  - new features (use feature-development workflow)
+  - performance issues (may need different approach)
+  - refactoring (use refactoring workflow)
+
+# Reasoning context for Claude
+reasoning_hints:
+  severity_indicators:
+    high:
+      - data loss
+      - security vulnerability
+      - system crash
+      - blocking user
+    medium:
+      - incorrect results
+      - UI broken
+      - performance degraded
+    low:
+      - cosmetic issues
+      - edge case
+      - minor UX problem
+  recommend_full_workflow_when:
+    - Bug has unclear cause
+    - Multiple symptoms or related issues
+    - Previous fix attempts failed
+    - Bug in critical path (auth, payments, data)
+  common_shortcuts:
+    - Stack trace points to exact line -> May skip reproduce
+    - Single typo or obvious error -> May skip root-cause
+    - Fix is < 5 lines with clear scope -> May simplify verify

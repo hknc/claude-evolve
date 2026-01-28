@@ -1,0 +1,102 @@
+# Example Workflow Template (Software Development)
+#
+# This is an EXAMPLE - not a requirement.
+# Claude-evolve adapts to ANY domain dynamically.
+#
+# You can:
+# - Delete these examples if not needed
+# - Create your own templates for your domain
+# - Let Claude suggest phases dynamically (recommended)
+#
+# NOTE: Skills and agents listed are suggestions. System works without them.
+
+name: research
+version: "1.0"
+description: |
+  Exploring codebases, technologies, or approaches before implementation.
+  Focus on understanding and documenting findings.
+
+complexity: low-medium
+
+phases:
+  - name: scope
+    goal: Define what we're trying to learn
+    suggested_approaches:
+      - "Clarify research questions"
+      - "Define success criteria"
+    deliverable: Clear research questions
+    skip_if: Question is already specific and focused
+    questions:
+      - What are we trying to understand?
+      - What will we do with this knowledge?
+      - How deep do we need to go?
+
+  - name: explore
+    goal: Gather relevant information
+    suggested_approaches:
+      - "Explore codebase systematically"
+      - "Search for relevant patterns"
+      - "Use code exploration agents if available"
+    deliverable: Raw findings and observations
+    skip_if: Never skip exploration
+    questions:
+      - Where is this implemented?
+      - How does it work?
+      - What patterns are used?
+      - What are the edge cases?
+
+  - name: synthesize
+    goal: Make sense of findings
+    suggested_approaches:
+      - "Organize findings into coherent understanding"
+      - "Identify trade-offs and recommendations"
+      - "Use brainstorming skill if available"
+    deliverable: Organized understanding with recommendations
+    skip_if: Findings are simple and self-explanatory
+    questions:
+      - What did we learn?
+      - How does this affect our approach?
+      - What trade-offs exist?
+      - What's the recommendation?
+
+triggers:
+  - "how does"
+  - "what is"
+  - "explore"
+  - "understand"
+  - "research"
+  - "investigate how"
+  - "investigate architecture"
+  - "learn about"
+  - "analyze"
+  - "where is"
+  - "find"
+
+skip_for:
+  - implementation tasks (use feature-development)
+  - bug fixes (use bug-investigation)
+  - refactoring (use refactoring workflow)
+
+# Reasoning context for Claude
+reasoning_hints:
+  depth_indicators:
+    deep:
+      - Architecture decisions
+      - Technology evaluation
+      - Performance analysis
+    medium:
+      - Understanding a module
+      - Learning a pattern
+      - Comparing approaches
+    shallow:
+      - Finding a file
+      - Checking a value
+      - Quick lookup
+  recommend_full_workflow_when:
+    - Research will inform significant decisions
+    - Multiple stakeholders need to understand
+    - Findings need to be documented
+  efficient_shortcuts:
+    - Single-question research -> Skip scope
+    - Clear findings -> Skip synthesize
+    - Already familiar with area -> Lighter explore
