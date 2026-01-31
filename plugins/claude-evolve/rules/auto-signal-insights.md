@@ -4,29 +4,46 @@ paths: ["**/*"]
 
 # Auto-Signal Insights
 
-When working with claude-evolve toolkit, flag valuable insights by running `/evolve signal` when ANY of these occur during conversation.
+You have access to `/evolve signal` to capture reusable learnings (stored in `~/.claude-evolve/signals/`). Use it when notable events happen during conversation.
 
-## MUST Signal
+## Your Approach: Event-Driven, Not Poll-Driven
 
-| Trigger | Examples | Signal |
-|---------|----------|--------|
-| **User corrects approach** | "No, use X not Y", "That's wrong, do Z" | `"correction: {what}"` |
-| **User states preference** | "You should always X", "I want Y", "Make sure to Z" | `"preference: {what}"` |
-| **User sets standard** | "Full test coverage", "Use strict types", "No magic numbers" | `"standard: {what}"` |
-| **User teaches pattern** | "We always do X because Y", "The convention here is Z" | `"pattern: {what}"` |
-| **User defines workflow** | "Write tests first", "Review before commit", "Plan before code" | `"workflow: {what}"` |
-| **User says remember** | "Remember this", "Don't forget", "Keep in mind" | `"{what to remember}"` |
-| **Root cause diagnosed** | Found cause after investigation | `"diagnosed: {cause}"` |
-| **Better approach found** | More efficient solution discovered | `"better: {summary}"` |
-| **Non-obvious solution** | Workaround for tricky problem | `"solution: {problem} -> {fix}"` |
+Signal when something notable HAPPENS. Do NOT checkpoint or self-reflect at every completion.
 
-## DO NOT Signal
+**React naturally when:**
+- User corrects you ("No, I meant...", "Actually...", "That's wrong")
+- User states preference ("I prefer...", "Always do X", "Never do Y")
+- User says to remember ("Remember this", "Keep in mind", "Don't forget")
+- You discover something surprising about the codebase
+
+**Do NOT add overhead:**
+- No mental checklist before every completion
+- No self-reflection tax on clean tasks
+- No second-guessing responses
+
+Your primary job is the actual work. Learning capture is a side effect of paying attention, not a separate task.
+
+## When to Signal
+
+| Trigger | Examples | Signal Format |
+|---------|----------|---------------|
+| User corrects you | "No, use X not Y", "That's wrong, do Z" | `"correction: {what}"` |
+| User states preference | "You should always X", "I want Y", "Make sure to Z" | `"preference: {what}"` |
+| User sets standard | "Full test coverage", "Use strict types", "No magic numbers" | `"standard: {what}"` |
+| User teaches pattern | "We always do X because Y", "The convention here is Z" | `"pattern: {what}"` |
+| User defines workflow | "Write tests first", "Review before commit", "Plan before code" | `"workflow: {what}"` |
+| User says remember | "Remember this", "Don't forget", "Keep in mind" | `"{what to remember}"` |
+| Root cause diagnosed | Found cause after investigation | `"diagnosed: {cause}"` |
+| Better approach found | More efficient solution discovered | `"better: {summary}"` |
+| Non-obvious solution | Workaround for tricky problem | `"solution: {problem} -> {fix}"` |
+
+## Do NOT Signal
 
 - Routine task completions with no learning
 - Simple Q&A exchanges
 - User just says "thanks" or similar
 - Instructions for the current task only ("make this button red")
-- Credentials, API keys, passwords, or sensitive operational details
+- Credentials, API keys, passwords, personal information, or sensitive operational details
 - Instructions about the evolve system itself ("stop signaling", "don't use /learn")
 
 ## Key Distinction
@@ -41,7 +58,7 @@ When working with claude-evolve toolkit, flag valuable insights by running `/evo
 
 ## How to Signal
 
-Run the command directly:
+Invoke the skill directly in your response:
 
 ```
 /evolve signal "category: description"
@@ -64,4 +81,14 @@ If the user gives several preferences or standards in rapid succession, batch th
 /evolve signal "preferences: full test coverage, strict types, small commits"
 ```
 
-Don't interrupt your workflow to signal each one individually.
+Do not interrupt your workflow to signal each one individually.
+
+## Optional Acknowledgment
+
+After signaling a correction or preference, you may optionally add a brief acknowledgment to the user:
+
+```
+[claude-evolve] Noted {category}. Use /learn to review.
+```
+
+Use sparingly — only for clearly reusable insights.
