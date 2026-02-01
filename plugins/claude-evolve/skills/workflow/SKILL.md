@@ -130,7 +130,9 @@ See `${CLAUDE_PLUGIN_ROOT}/commands/workflow.md` (Spec Doc Sync sections) for fo
 
 ### 6. Sub-Task Management
 
-When a phase has 3+ items, sub-tasks are created automatically with blockedBy dependencies. `/workflow next` with sub-tasks advances through sub-tasks first, then moves to the next phase when all are complete. See `${CLAUDE_PLUGIN_ROOT}/commands/workflow.md` (Intelligent Sub-Task Creation and Working with Sub-Tasks sections) for full sub-task creation logic and dependency analysis.
+Sub-task creation is determined by **complexity scoring**, not a fixed item count. The algorithm assesses item count, dependencies, scope, and complexity signals (each Low/Medium/High) to decide whether to skip, suggest, or auto-create sub-tasks.
+
+See `${CLAUDE_PLUGIN_ROOT}/references/complexity-scoring.md` for the scoring algorithm. See `${CLAUDE_PLUGIN_ROOT}/commands/workflow.md` (Intelligent Sub-Task Creation and Working with Sub-Tasks sections) for dependency analysis and sub-task workflows.
 
 ### 7. Switch Between Workflows
 
@@ -138,7 +140,7 @@ When a phase has 3+ items, sub-tasks are created automatically with blockedBy de
 
 ### 8. Expand Phase into Sub-Tasks
 
-Parse the current phase's items from the task description. If 3+ items are detected, create sub-tasks with blockedBy dependencies (sequential by default). See `${CLAUDE_PLUGIN_ROOT}/commands/workflow.md` (Intelligent Sub-Task Creation section) for sub-task creation logic and dependency analysis.
+Parse the current phase's items from the task description. Use complexity scoring to determine whether to create sub-tasks (see `${CLAUDE_PLUGIN_ROOT}/references/complexity-scoring.md`). See `${CLAUDE_PLUGIN_ROOT}/commands/workflow.md` (Intelligent Sub-Task Creation section) for dependency analysis.
 
 ### 9. Handling Pivots
 

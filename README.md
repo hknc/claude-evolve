@@ -159,7 +159,7 @@ Manage your active workflow with `/workflow`:
 /workflow expand   → create sub-tasks from phase items
 ```
 
-When a phase has 3+ items, sub-tasks are created automatically with intelligent dependency analysis:
+Sub-tasks are created based on **intelligent complexity scoring** (not a fixed count). The algorithm assesses item count, dependencies, scope, and complexity — then skips, suggests, or auto-creates sub-tasks:
 
 | Pattern Detected | Dependency Strategy |
 |-----------------|-------------------|

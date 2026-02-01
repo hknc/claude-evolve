@@ -1,6 +1,6 @@
 {
   "name": "claude-evolve",
-  "version": "1.1.54",
+  "version": "1.1.55",
   "description": "Adaptive toolkit that learns your patterns and provides personalized guidance. Auto-captures observations via hooks.",
   "author": {
     "name": "Hakan Cevirgen"
