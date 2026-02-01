@@ -116,14 +116,24 @@ Announce: `[claude-evolve] Phase complete: {old_phase}. Now in: {new_phase}`
 
 ### 3.5 Intelligent Sub-Task Creation
 
-When entering a phase with multiple items, automatically analyze and create sub-tasks with appropriate blockedBy dependencies.
+When entering a phase with multiple items, use **complexity scoring** to determine whether to create sub-tasks.
 
 **Auto-detect sub-items in plan/description:**
 - `- 3.1: Description` or `- 3.1 Description`
 - `### 3.1 Title` followed by description
 - Numbered lists, bullet points with distinct items
 
-**If 3+ sub-items detected, auto-create sub-tasks:**
+**Complexity scoring determines action:** See `${CLAUDE_PLUGIN_ROOT}/references/complexity-scoring.md` for the full scoring algorithm.
+
+| Total Score | Action |
+|-------------|--------|
+| 4-6 | Skip sub-tasks (track inline) |
+| 7-8 | Suggest sub-tasks (ask user) |
+| 9-12 | Auto-create sub-tasks |
+
+**Overrides:** User saying "expand" forces creation; "keep it simple" skips; items < 2 never creates.
+
+**When creating sub-tasks:**
 
 For each sub-item, **CALL TaskCreate**:
 ```json

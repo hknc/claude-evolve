@@ -1,6 +1,6 @@
 # Claude Evolve Plugin
 
-**v1.1.47** | Adaptive toolkit that learns your patterns for Claude Code.
+Adaptive toolkit that learns your patterns for Claude Code.
 
 ## Installation
 

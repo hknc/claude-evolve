@@ -35,3 +35,7 @@ Claude Code has a native `LSP` tool. Use it directly:
 - **Accurate**: Understands code semantically, not just text
 - **Fast**: Pre-indexed, instant results
 - **Context-aware**: Knows about types, scopes, imports
+
+## Fallback
+
+If LSP fails or returns empty, fall back to Grep/Glob with explicit note: "LSP unavailable, using text search."

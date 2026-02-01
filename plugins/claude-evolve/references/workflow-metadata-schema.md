@@ -152,7 +152,19 @@ metadata:
   # ... existing fields ...
   has_subtasks: "true"            # Flag indicating sub-tasks exist
   subtask_count: "6"              # Total sub-tasks created
+  subtask_strategy: "sequential"  # How blockedBy was assigned: sequential | parallel | explicit
+  subtask_decision: "auto"        # How sub-task creation was decided: auto | suggest | skip | override
+  subtask_score: "10"             # Complexity score (4-12) that triggered the decision
 ```
+
+### Sub-Task Decision Values
+
+| Value | Meaning |
+|-------|---------|
+| `auto` | Score 9-12: sub-tasks created automatically |
+| `suggest` | Score 7-8: user was prompted, said yes |
+| `skip` | Score 4-6: no sub-tasks created (or user said no at suggest) |
+| `override` | User said "expand" regardless of score |
 
 ### Sub-Task Metadata
 
