@@ -1,0 +1,33 @@
+{
+  "name": "claude-evolve",
+  "owner": {
+    "name": "Hakan Cevirgen"
+  },
+  "metadata": {
+    "description": "Adaptive toolkit that learns your patterns for Claude Code"
+  },
+  "plugins": [
+    {
+      "name": "claude-evolve",
+      "source": "./plugins/claude-evolve",
+      "description": "Adaptive toolkit that learns your patterns and provides personalized guidance. Auto-captures observations via hooks.",
+      "version": "1.0.6",
+      "author": {
+        "name": "Hakan Cevirgen"
+      },
+      "homepage": "https://github.com/hknc/claude-evolve",
+      "repository": "https://github.com/hknc/claude-evolve",
+      "license": "MIT",
+      "keywords": [
+        "claude-code",
+        "adaptive",
+        "patterns",
+        "toolkit",
+        "automation",
+        "productivity",
+        "workflow",
+        "guidance"
+      ]
+    }
+  ]
+}

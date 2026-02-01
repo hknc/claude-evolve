@@ -1,0 +1,113 @@
+# Example Workflow Template (Software Development)
+#
+# This is an EXAMPLE - not a requirement.
+# Claude-evolve adapts to ANY domain dynamically.
+#
+# You can:
+# - Delete these examples if not needed
+# - Create your own templates for your domain
+# - Let Claude suggest phases dynamically (recommended)
+#
+# NOTE: Skills and agents listed are suggestions. System works without them.
+
+name: refactoring
+version: "1.0"
+description: |
+  Improving code structure without changing behavior.
+  Ensures refactoring is safe, incremental, and well-tested.
+
+complexity: medium
+
+phases:
+  - name: analyze
+    goal: Understand current structure and identify improvements
+    suggested_approaches:
+      - "Explore code architecture"
+      - "Identify patterns being violated"
+      - "Use code exploration to understand structure"
+    deliverable: Analysis of current code with improvement opportunities
+    skip_if: Scope is narrow and obvious (rename, extract method)
+    questions:
+      - What's wrong with the current structure?
+      - What patterns are being violated?
+      - What's the target state?
+      - Are there dependencies to consider?
+
+  - name: test-coverage
+    goal: Ensure sufficient test coverage before changes
+    suggested_approaches:
+      - "Review existing tests"
+      - "Add tests for uncovered behavior"
+      - "Use test-driven approach if available"
+    deliverable: Tests that verify current behavior
+    skip_if: Existing tests already cover the area
+    questions:
+      - What tests exist for this code?
+      - Are the important behaviors tested?
+      - Do we need to add tests first?
+
+  - name: refactor
+    goal: Make incremental, behavior-preserving changes
+    suggested_approaches:
+      - "Make small, verifiable changes"
+      - "Run tests after each change"
+    deliverable: Refactored code with tests still passing
+    skip_if: Never skip the actual refactoring
+    questions:
+      - Are changes behavior-preserving?
+      - Can this be done incrementally?
+      - Are we introducing new patterns?
+
+  - name: verify
+    goal: Confirm behavior unchanged, quality improved
+    suggested_approaches:
+      - "Run all tests"
+      - "Review code quality improvements"
+      - "Use verification skill if available"
+    deliverable: All tests pass, code quality improved
+    skip_if: Very small, isolated change
+    questions:
+      - Do all tests still pass?
+      - Is the code clearer now?
+      - Are there new patterns to document?
+
+triggers:
+  - "refactor"
+  - "clean up"
+  - "restructure"
+  - "reorganize"
+  - "improve structure"
+  - "extract"
+  - "consolidate"
+  - "DRY"
+
+skip_for:
+  - new features (use feature-development)
+  - bug fixes (use bug-investigation)
+  - pure research (use research workflow)
+
+# Reasoning context for Claude
+reasoning_hints:
+  risk_indicators:
+    high:
+      - Large scope (many files)
+      - Shared code paths
+      - No existing tests
+      - API changes
+    medium:
+      - Internal restructuring
+      - Adding abstraction
+      - Renaming with many references
+    low:
+      - Single file
+      - Local extraction
+      - Simple rename
+  recommend_full_workflow_when:
+    - Refactoring touches shared code
+    - No existing test coverage
+    - Changing public APIs
+    - Introducing new patterns team needs to follow
+  safe_shortcuts:
+    - IDE-assisted rename -> Skip analyze
+    - Good test coverage exists -> Skip test-coverage
+    - Tiny extraction -> Simplify verify

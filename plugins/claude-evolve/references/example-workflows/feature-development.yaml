@@ -1,0 +1,107 @@
+# Example Workflow Template (Software Development)
+#
+# This is an EXAMPLE - not a requirement.
+# Claude-evolve adapts to ANY domain dynamically.
+#
+# You can:
+# - Delete these examples if not needed
+# - Create your own templates for your domain
+# - Let Claude suggest phases dynamically (recommended)
+#
+# NOTE: Skills and agents listed are suggestions. System works without them.
+
+name: feature-development
+version: "1.0"
+description: |
+  Building new features from requirements to implementation.
+  This workflow ensures clarity, planning, and quality before shipping.
+
+complexity: medium-high
+
+phases:
+  - name: clarify
+    goal: Clarify requirements and constraints
+    suggested_approaches:
+      - "Explore existing codebase for patterns"
+      - "Use brainstorming skill if available"
+    deliverable: Clear problem statement with acceptance criteria
+    skip_if: Requirements already crystal clear from user
+    questions:
+      - What problem does this feature solve?
+      - Who uses it and how?
+      - What are the constraints (performance, security, compatibility)?
+      - What does success look like?
+
+  - name: plan
+    goal: Plan implementation approach
+    suggested_approaches:
+      - "Analyze codebase architecture"
+      - "Create implementation plan"
+      - "Use writing-plans skill if available"
+    deliverable: Implementation plan with file changes identified
+    skip_if: Simple change with obvious implementation, pattern already known
+    questions:
+      - What existing patterns should we follow?
+      - What files need to change?
+      - Are there edge cases to consider?
+      - What's the testing strategy?
+
+  - name: execute
+    goal: Write the code
+    suggested_approaches:
+      - "Write tests alongside implementation"
+      - "Use test-driven-development skill if available"
+    deliverable: Working code with tests
+    skip_if: Never skip implementation
+    questions: []
+
+  - name: verify
+    goal: Ensure quality before completion
+    suggested_approaches:
+      - "Run all tests"
+      - "Review code for issues"
+      - "Use verification skill if available"
+    deliverable: Tests passing, code reviewed
+    skip_if: Trivial change with no risk
+    questions:
+      - Do all tests pass?
+      - Is the code clean and maintainable?
+      - Are edge cases handled?
+      - Is documentation needed?
+
+triggers:
+  - "implement"
+  - "build"
+  - "add feature"
+  - "create"
+  - "develop"
+  - "add support for"
+  - "new feature"
+
+skip_for:
+  - bug fixes (use bug-investigation workflow)
+  - config changes (usually single-phase)
+  - simple refactors (use refactoring workflow)
+  - documentation only
+
+# Reasoning context for Claude
+reasoning_hints:
+  security_sensitive:
+    - authentication
+    - authorization
+    - payment
+    - encryption
+    - API keys
+    - tokens
+    - credentials
+  complexity_indicators:
+    - multiple files
+    - new dependencies
+    - database changes
+    - external integrations
+    - concurrent operations
+  recommend_full_workflow_when:
+    - Feature involves security-sensitive functionality
+    - Multiple components need coordination
+    - New patterns being introduced
+    - External service integration
